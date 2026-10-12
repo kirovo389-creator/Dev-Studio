@@ -1,21 +1,34 @@
 # DevStudio
 
-A landscape Android coding workspace prototype written in Java. It includes a three-pane IDE-inspired interface, a project file list, editor, AI agent panel, encrypted local API-key storage, and a GitHub Actions APK build.
+An Android Java coding-workspace prototype with a dark three-pane editor, GitHub-backed projects, and a configurable OpenAI-compatible AI provider.
 
-## Build
+## Create and open projects
 
-The GitHub Actions workflow builds a debug-signed APK on pushes to `main` or manually through Actions. Open **Actions → Build DevStudio APK → Artifacts** to download it.
+- **CREATE PROJECT** creates a private GitHub repository and writes a starter Android Gradle project into it.
+- **OPEN PROJECT** loads text files from an accessible GitHub repository.
+- **SAVE TO GITHUB** commits the selected file.
+- **BUILD** dispatches the GitHub Actions workflow, which builds a debug APK artifact.
 
-## AI setup
+### GitHub token permissions
 
-On first launch, enter an OpenAI API key. API usage may cost money. The key is stored locally using AndroidX Security Crypto where available and is never committed to the repository.
+The token must be able to create repositories and write repository contents. For fine-grained personal access tokens, grant repository **Administration: Read and write**, **Contents: Read and write**, and **Actions: Read and write**. For classic tokens, use an appropriate repo scope. Keep the token private; DevStudio stores it using AndroidX Security Crypto.
 
-## Current prototype limitations
+## AI provider settings
 
-- The editor workspace is currently local to the app; GitHub repository sync is not implemented yet.
-- BUILD opens the repository Actions page; it does not yet upload the local editor workspace to GitHub.
-- The generated artifact is Android's debug-signed APK, not a production release signed with your own private signing key.
-- AI file actions currently support simple filenames in the workspace root.
+AI setup is optional. Open **AI Agent → SETTINGS** whenever you want to enter or change:
+- **BASE URL**, e.g. `https://api.openai.com/v1`
+- **API KEY**
+- **MODEL ID**, e.g. `gpt-4o-mini`
+
+The endpoint must be compatible with the OpenAI Chat Completions API. API usage may cost money.
+
+## Build APK
+
+GitHub Actions builds a debug-signed APK on pushes to `main` and on manual workflow dispatch. Open **Actions → Build DevStudio APK → Artifacts** to download it. It is debug-signed, not a production release signed with your own private signing key.
+
+## Limitations
+
+DevStudio is a prototype, not a 1:1 replacement for Android Studio. It does not currently include an Android emulator, full Java/Kotlin language server, visual layout designer, debugger, or full Gradle sync UI. The file browser and editor support text files; large/binary assets are not editable in the app.
 
 ## Stack
 
